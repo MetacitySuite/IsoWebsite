@@ -415,5 +415,6 @@ export function generateWithRiver(x, y) {
     let grid = layout.toGrid();
     addRiver(grid);
     addBridgeAlongYAxis(grid);
+    addBridgeAlongYAxis(grid);
     return grid;
 }

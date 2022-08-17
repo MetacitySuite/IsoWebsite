@@ -66,7 +66,9 @@ export class WalkingActivity extends Activity {
                 this.startTile.leave();
             } else {
                 this.path = null;
-                return new WaitingActivity(this, Math.floor(Math.random() * 60));
+                return new WaitingActivity(this, Math.floor(Math.random() * 10), (time, person, city) => {
+                    this.planPath(city, this.startTile, this.endTile);
+                });
                 
             }
         } 
@@ -91,16 +93,25 @@ export class WalkingActivity extends Activity {
 
 
 export class WaitingActivity extends Activity {
-    constructor(activity, timeOut) {
+    constructor(activity, timeOut, beforeReturn) {
         super();
         this.activity = activity;
         this.timeOut = timeOut;
+        this.beforeReturn = beforeReturn;
     }
 
     tick(time, person, city) {
         this.timeOut--;
+
+
+
         if (this.timeOut <= 0) 
+        {
+            if (this.beforeReturn) {
+                this.beforeReturn(time, person, city);
+            }
             return this.activity;
+        }
         return this;
     }
 }

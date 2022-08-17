@@ -3,6 +3,13 @@ import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUt
 import { Layout, generateWithRiver } from './layout';
 import { Population } from './population';
 import { City } from './city';
+import { genTrees } from './tree.js';
+
+
+
+
+
+
 
 window.onload = () => {
     const grid = generateWithRiver(15, 15);
@@ -98,6 +105,9 @@ window.onload = () => {
     const waterMesh = new THREE.Mesh(water, waterMaterial);
     scene.add(waterMesh);
 
+    const trees = genTrees(grid, BLOCKSIZE * 0.5, BLOCKSIZE);
+    scene.add(trees);
+
     
     const sceneCenter = new THREE.Vector3(30, 30, 0);
     camera.position.x = -500;
@@ -113,7 +123,7 @@ window.onload = () => {
     
     const city = new City(grid);
     const population = new Population(city);
-    population.generate(personMesh, 20);
+    population.generate(personMesh, 100);
     for (let i = 0; i < population.people.length; i++) {
         scene.add(population.people[i].mesh);
     }
@@ -139,9 +149,13 @@ window.onload = () => {
         camera.aspect = w / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(w, window.innerHeight);
-        scene.position.x = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
-        scene.position.y = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
-
+        if (window.innerHeight < 0.5 * window.innerWidth) {
+            scene.position.x = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
+            scene.position.y = Math.max(Math.min(window.innerWidth - 1200, 0), -25);
+        } else {
+            scene.position.x = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
+            scene.position.y = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
+        }
         changed = true;
     }
 
