@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <title>Metacity</title>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        #introContainer {
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        #introTexts {
+            text-transform: uppercase;
+            position: absolute;
+            bottom: 0;
+            max-width: 20rem;
+            margin: 1rem 2rem;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+    </style>
+</head>
+<body>
+    <!--<header>
+        <a href="https://github.com/MetacitySuite">Github</a>
+    </header>
+
+    <h1>Metacity</h1>
+    <p>A set of tools for urban data synthesis, analysis and visualization.</p>
+    <a href="mailto:hello@metacity.cc">Get in touch</a>
+    <p>Our goal is to create a new generation of open-source tools and services targeted at developers, urban planners and the general public.</p>
+    <div id="root"></div>-->
+    <div id="introContainer">
+        <div id="introTexts">
+            <h1>Metacity</h1>
+            <p>A set of tools for urban data synthesis, analysis and visualization</p>
+            <a href="mailto:hello@metacity.cc">Get in touch</a>
+            <p>Our goal is to create a new generation of open-source tools and services targeted at developers, urban planners and the general public</p>
+        </div>
+        <canvas id="citycanvas"></canvas>
+    </div>
+
+    <script src="bundle.js"></script>
+</body>
+</html>
