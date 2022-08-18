@@ -123,23 +123,16 @@ window.onload = () => {
     
     const city = new City(grid);
     const population = new Population(city);
-    population.generate(personMesh, 100);
+    population.generate(personMesh, 40);
     for (let i = 0; i < population.people.length; i++) {
         scene.add(population.people[i].mesh);
     }
 
     let time = 0;
-    let changed = true;
     const animate = () => {
         requestAnimationFrame(animate);
         population.tick(time, BLOCKSIZE);
-
-        //if (changed) {
-            renderer.render(scene, camera);
-            changed = false;
-        //}
-        
-
+        renderer.render(scene, camera);
         time++;
     }
     animate();
@@ -149,14 +142,13 @@ window.onload = () => {
         camera.aspect = w / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(w, window.innerHeight);
-        if (window.innerHeight < 0.5 * window.innerWidth) {
+        if (window.innerHeight < 0.58 * window.innerWidth) {
             scene.position.x = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
             scene.position.y = Math.max(Math.min(window.innerWidth - 1200, 0), -25);
         } else {
             scene.position.x = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
             scene.position.y = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
         }
-        changed = true;
     }
 
     window.onresize = resize;
