@@ -45,7 +45,7 @@ window.onload = () => {
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[i].length; j++) {
             if (grid[i][j] === 'B') {
-                const height = (Math.random() * 0.2 + 2) * BLOCKSIZE;
+                const height = (Math.random() * 0.5 + 2) * BLOCKSIZE;
                 const geometry = new THREE.BoxGeometry(BLOCKSIZE, BLOCKSIZE, height, 1, 1, 1);
                 geometry.translate(i * BLOCKSIZE, j * BLOCKSIZE, height * 0.5 - BLOCKSIZE * 0.5);
                 buildings.push(geometry);
@@ -110,9 +110,9 @@ window.onload = () => {
 
     
     const sceneCenter = new THREE.Vector3(30, 30, 0);
-    camera.position.x = -500;
-    camera.position.y = -500;
-    camera.position.z = 500;
+    camera.position.x = -400;
+    camera.position.y = -400;
+    camera.position.z = 400;
     camera.up = new THREE.Vector3(0, 0, 1);
     camera.lookAt(sceneCenter);
 
@@ -137,18 +137,25 @@ window.onload = () => {
     }
     animate();
 
+    let initHeight = 0;
     const resize = () => {
-        const w = Math.min(window.innerWidth, 1920);
-        camera.aspect = w / window.innerHeight;
+        const sizes = canvas.parentElement?.getBoundingClientRect();
+        const w = sizes?.width || window.innerWidth;
+        if (initHeight === 0) {
+            initHeight = sizes?.height || window.innerHeight;
+        }
+
+        camera.aspect = w / initHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(w, window.innerHeight);
-        if (window.innerHeight < 0.58 * window.innerWidth) {
+
+        renderer.setSize(w, initHeight);
+        /*if (window.innerHeight < 0.58 * window.innerWidth) {
             scene.position.x = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
             scene.position.y = Math.max(Math.min(window.innerWidth - 1200, 0), -25);
         } else {
             scene.position.x = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
             scene.position.y = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
-        }
+        }*/
     }
 
     window.onresize = resize;

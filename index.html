@@ -1,45 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
 
     <title>Metacity</title>
+    <link rel="stylesheet" href="assets/style.css">
 
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-
-        #introContainer {
-            max-width: 1920px;
-            margin: 0 auto;
-        }
-
-        #introTexts {
-            text-transform: uppercase;
-            position: absolute;
-            bottom: 0;
-            max-width: 20rem;
-            margin: 1rem 2rem;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        canvas {
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-        }
-
-    </style>
 </head>
+
 <body>
     <!--<header>
         <a href="https://github.com/MetacitySuite">Github</a>
@@ -51,15 +23,126 @@
     <p>Our goal is to create a new generation of open-source tools and services targeted at developers, urban planners and the general public.</p>
     <div id="root"></div>-->
     <div id="introContainer">
-        <div id="introTexts">
-            <h1>Metacity</h1>
-            <p>A set of tools for urban data synthesis, analysis and visualization</p>
-            <a href="mailto:hello@metacity.cc">Get in touch</a>
-            <p>Our goal is to create a new generation of open-source tools and services targeted at developers, urban planners and the general public</p>
+        <div id="canvasContainer">
+            <canvas id="citycanvas"></canvas>
         </div>
-        <canvas id="citycanvas"></canvas>
+        <div id="introTexts">
+            <p><span class="name">Metacity</span> offers tools and services for urban data processing and visualization
+            </p>
+            <p><a href="mailto:hello@metacity.cc" class="linkEmph">Get in touch</a></p>
+        </div>
     </div>
-
+    <div class="contentContatiner">
+        <div id="projects">
+            <a href="https://demo.metacity.cc" class="project" target="_blank" rel="noopener noreferrer">
+                <div class="itemType">Demo Project</div>
+                <div class="projectImg" style="background-image: url(assets/detail3.png)"></div>
+                <div class="itemTitle">Building Heights</div>
+            </a>
+            <a href="https://demo.metacity.cc/flat" class="project" target="_blank" rel="noopener noreferrer">
+                <div class="itemType">Demo Project</div>
+                <div class="projectImg" style="background-image: url(assets/detail5.png)"></div>
+                <div class="itemTitle">Area utilization</div>
+            </a>
+        </div>
+    </div>
+    <div id="businessStrip">
+        <div class="contentContatiner">
+            <div id="business">
+                <h2>For Businesses <span class="dim" id="client">Real&nbsp;Estate Developers, Creative Studios,
+                        Marketing&nbsp;Agencies, Events &amp; Expos, Urban&nbsp;Planners</span>
+                </h2>
+                <h3>to help you easily understand and communicate your data and content</h3>
+                <div class="taskContainer">
+                    <div class="task">Blazing fast visualization on the web</div>
+                    <div class="task">Building complex and robust apps</div>
+                    <div class="task">Filtering and optimizing geometric data</div>
+                    <div class="task">Combining 2D and 3D</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contentContatiner">
+        <div id="devs">
+            <div id="linkContainer">
+                <div class="links">
+                    <div class="linksTitle">Our Tools</div>
+                    <div class="linktree">
+                        <a class="linkEmph" href="https://github.com/MetacitySuite/Metacity">
+                            <img src="assets/rule.svg" alt="" class="icon">
+                            Metacity</a>
+                        <a class="linkEmph" href="https://github.com/MetacitySuite/BananaGL">
+                            <img src="assets/map.svg" alt="" class="icon">
+                            BananaGL</a>
+                        <a class="linkEmph" href="https://github.com/MetacitySuite/DataAPI">
+                            <img src="assets/package.svg" alt="" class="icon">
+                            DataAPI</a>
+                    </div>
+                </div>
+                <div class="links">
+                    <div class="linksTitle">Resources</div>
+                    <div class="linktree">
+                        <a class="linkEmph" href="https://github.com/metacitysuite">
+                            <img src="assets/github.svg" alt="" class="icon">
+                            GitHub</a>
+                        <a class="linkEmph" href="https://docs.metacity.cc">
+                            <img src="assets/book.svg" alt="" class="icon">
+                            Docs</a>
+                        <a class="linkEmph" href="https://api.metacity.cc">
+                            <img src="assets/package.svg" alt="" class="icon">
+                            DataAPI Service</a>
+                    </div>
+                </div>
+            </div>
+            <p>We fully support and also develop our own <span class="neon">open-source</span> solutions.</p>
+        </div>
+    </div>
+    <div class="contentContatiner">
+        <div id="contact">
+            <div class="action col">
+                <p>Still not sure?</p>
+                <p><a href="mailto:hello@metacity.cc" class="linkEmph">Talk to us!</a></p>
+            </div>
+            <div class="col">
+                <p>Prague</p>
+                <p>hello@metacity.cc</p>
+                <p>Římská 12</p>
+                <p>120 00 Praha 2</p>
+                <p>Czech Republic</p>
+            </div>
+            <div class="col">
+                <p>Bor</p>
+                <p>Přimdská 362</p>
+                <p>348 02 Bor</p>
+                <p>Czech Republic</p>
+                <p>Reg. No.: 051 83 731</p>
+                <p>VAT: CZ05183731</p>
+            </div>
+        </div>
+    </div>
+    <div id="footerStrip">
+        <div class="contentContatiner">
+            <div id="partners">
+                <div class="itemType">Partners</div>
+                <img src="assets/cesnet.svg" alt="cesnet">
+            </div>
+            <div id="copyright">
+                &copy; 2022 stdio s.r.o. All rights reserved, www.stdio.cz
+            </div>
+        </div>
+    </div>
     <script src="bundle.js"></script>
+    <script>
+        const clients = ["Real&nbsp;Estate Developers", "Creative Studios", "Marketing&nbsp;Agencies", "Events and Expos", "Urban&nbsp;Planners"];
+        const setClient = () => {
+            const client = clients[Math.floor(Math.random() * clients.length)];
+            document.getElementById("client").innerHTML = client;
+        }
+
+        //setClient();
+        //setInterval(setClient, 1000);
+
+    </script>
 </body>
+
 </html>
