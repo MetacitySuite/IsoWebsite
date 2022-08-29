@@ -4,8 +4,7 @@ import { Layout, generateWithRiver } from './layout';
 import { Population } from './population';
 import { City } from './city';
 import { genTrees } from './tree.js';
-
-
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 
 
