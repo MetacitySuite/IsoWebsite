@@ -2,6 +2,7 @@
 
 :root {
     --color-text: #444;
+    --color-text-dim: #888;
     --underline-text: #DDD;
     --content-margin: 2rem;
     --content-width: 1000px;
@@ -32,6 +33,19 @@ body {
     height: calc(min(600px, 60vh));
     width: 100%;
     overflow: hidden;
+    position: relative;
+}
+
+#clickPrompt {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+    margin: var(--content-margin);
+    color: var(--color-text-dim);
+    font-size: 1rem;
+    font-weight: 300;
+    z-index: 4;
 }
 
 #introTexts {
@@ -82,6 +96,7 @@ canvas {
     width: 100%;
     height: 100%;
     z-index: -2;
+    cursor: pointer;
 }
 
 .contentContatiner {

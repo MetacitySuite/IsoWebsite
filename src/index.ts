@@ -1,164 +1,232 @@
 import * as THREE from 'three';
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
-import { Layout, generateWithRiver } from './layout';
+import { generateWithRiver } from './layout';
 import { Population } from './population';
 import { City } from './city';
 import { genTrees } from './tree.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
+const BLOCKSIZE = 2;
+
+class CityAnimation {
+    roadMaterial: THREE.MeshLambertMaterial;
+    bridgeMaterial: THREE.MeshLambertMaterial;
+    bridgeMaterialHandles: THREE.MeshLambertMaterial;
+    buildingMaterial: THREE.MeshLambertMaterial;
+    parkMaterial: THREE.MeshLambertMaterial;
+    waterMaterial: THREE.MeshLambertMaterial;
+
+    canvas: HTMLCanvasElement;
+    scene: THREE.Scene;
+    renderer: THREE.WebGLRenderer;
+    camera: THREE.PerspectiveCamera;
+
+    population: Population | undefined;
+    canvasHeight = 0;
+
+    constructor() {
+        this.canvas = document.getElementById('citycanvas') as HTMLCanvasElement;
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera(5, window.innerWidth / window.innerHeight, 10, 1000);
+        this.camera.position.x = -400;
+        this.camera.position.y = -400;
+        this.camera.position.z = 400;
+        this.camera.up = new THREE.Vector3(0, 0, 1);
+        this.camera.lookAt(new THREE.Vector3(30, 30, 0));
+        this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, powerPreference: 'high-performance' });
+        this.renderer.setClearColor(0xffffff, 1);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.roadMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
+        this.bridgeMaterial = new THREE.MeshLambertMaterial({ color: 0xFFAA00 });
+        this.bridgeMaterialHandles = new THREE.MeshLambertMaterial({ color: 0xCC8800 });
+        this.buildingMaterial = new THREE.MeshLambertMaterial({ color: 0xdddddd });
+        this.parkMaterial = new THREE.MeshLambertMaterial({ color: 0x55FF55 });
+        this.waterMaterial = new THREE.MeshLambertMaterial({ color: 0x00FFFF });
+
+        let time = 0;
+        const animate = () => {
+            requestAnimationFrame(animate);
+            if (this.population) 
+                this.population.tick(time, BLOCKSIZE);
+            this.renderer.render(this.scene, this.camera);
+            time++;
+        }
+        animate();
+
+        this.canvas.onclick = () => {
+            this.dispose();
+            this.generate();
+        }
+        
+        const prompt = document.getElementById('clickPrompt');
+        if (prompt)
+            prompt.onclick = () => {
+                this.dispose();
+                this.generate();
+            }
+    }
+
+    generate() {
+        const grid = generateWithRiver(15, 15);
+        const roads:  THREE.BoxGeometry[] = [];
+        const bridges:  THREE.BoxGeometry[] = [];
+        const buildings:  THREE.BoxGeometry[] = [];
+        const bridgeHandles:  THREE.BoxGeometry[] = [];
+        const parks:  THREE.BoxGeometry[] = [];
+        const waters:  THREE.BoxGeometry[] = [];
+        this.generateBlocks(grid, buildings, roads, parks, waters, bridges, bridgeHandles);
+        const road = mergeBufferGeometries(roads);
+        const roadMesh = new THREE.Mesh(road, this.roadMaterial);
+        this.scene.add(roadMesh);
+    
+        this.generateBridge(bridges, bridgeHandles);
+        this.generateBuildings(buildings);
+        this.generatePark(parks);
+        this.generateWater(waters);
+        this.generateTrees(grid);
+        this.setupLights();
+
+        const personMesh = this.generateDots();
+        this.generatePopulation(grid, personMesh);
+    }
+
+    private generatePopulation(grid: any[][], personMesh: THREE.Mesh<THREE.BoxGeometry, THREE.MeshLambertMaterial>) {
+        const city = new City(grid);
+        this.population = new Population(city);
+        this.population.generate(personMesh, 40);
+        for (let i = 0; i < this.population.people.length; i++) {
+            this.scene.add(this.population.people[i].mesh);
+        }
+    }
+
+    private generateDots() {
+        const personMesh = new THREE.Mesh(new THREE.BoxGeometry(BLOCKSIZE * 0.3, BLOCKSIZE * 0.3, BLOCKSIZE * 0.3, 1, 1, 1), new THREE.MeshLambertMaterial({ color: 0xff0000 }));
+        personMesh.position.z = BLOCKSIZE;
+        return personMesh;
+    }
+
+    private generateBridge(bridges: THREE.BoxGeometry[], bridgeHandles: THREE.BoxGeometry[]) {
+        if (bridges.length > 0) {
+            const bridge = mergeBufferGeometries(bridges);
+            const bridgeMesh = new THREE.Mesh(bridge, this.bridgeMaterial);
+            this.scene.add(bridgeMesh);
+
+            const bridgeHandle = mergeBufferGeometries(bridgeHandles);
+            const bridgeHandlesMesh = new THREE.Mesh(bridgeHandle, this.bridgeMaterialHandles);
+            this.scene.add(bridgeHandlesMesh);
+        }
+    }
+
+    private generateBuildings(buildings: THREE.BoxGeometry[]) {
+        const building = mergeBufferGeometries(buildings);
+        const buildingMesh = new THREE.Mesh(building, this.buildingMaterial);
+        this.scene.add(buildingMesh);
+    }
+
+    private generatePark(parks: THREE.BoxGeometry[]) {
+        const park = mergeBufferGeometries(parks);
+        const parkMesh = new THREE.Mesh(park, this.parkMaterial);
+        this.scene.add(parkMesh);
+    }
+
+    private generateWater(waters: THREE.BoxGeometry[]) {
+        const water = mergeBufferGeometries(waters);
+        const waterMesh = new THREE.Mesh(water, this.waterMaterial);
+        this.scene.add(waterMesh);
+    }
+
+    private generateTrees(grid: any[][]) {
+        const trees = genTrees(grid, BLOCKSIZE * 0.5, BLOCKSIZE);
+        this.scene.add(trees);
+    }
+
+    private setupLights() {
+        const light = new THREE.DirectionalLight(0xffffff, 0.5);
+        light.position.set(0, -100, 120);
+        this.scene.add(light);
+        const ambience = new THREE.AmbientLight(0xffffff, 0.7);
+        this.scene.add(ambience);
+    }
+
+    private generateBlocks(grid: any[][], buildings: THREE.BoxGeometry[], roads: THREE.BoxGeometry[], parks: THREE.BoxGeometry[], waters: THREE.BoxGeometry[], bridges: THREE.BoxGeometry[], bridgeHandles: THREE.BoxGeometry[]) {
+        let geometry;
+        for (let i = 0; i < grid.length; i++) {
+            for (let j = 0; j < grid[i].length; j++) {
+                switch (grid[i][j]) {
+                    case 'B':
+                        const height = (Math.random() * 0.5 + 2) * BLOCKSIZE;
+                        geometry = this.generateBlock(height);
+                        geometry.translate(i * BLOCKSIZE, j * BLOCKSIZE, height * 0.5 - BLOCKSIZE * 0.5);
+                        buildings.push(geometry);
+                        break;
+                    case 'R':
+                        geometry = this.generateBlock();
+                        geometry.translate(i * BLOCKSIZE, j * BLOCKSIZE, 0);
+                        roads.push(geometry);
+                        break;
+                    case 'P':
+                        geometry = this.generateBlock();
+                        geometry.translate(i * BLOCKSIZE, j * BLOCKSIZE, 0);
+                        parks.push(geometry);
+                        break;
+                    case 'W':
+                        geometry = this.generateBlock();
+                        geometry.translate(i * BLOCKSIZE, j * BLOCKSIZE, 0);
+                        waters.push(geometry);
+                        break;
+                    case 'M':
+                        geometry = this.generateBlock();
+                        geometry.translate(i * BLOCKSIZE, j * BLOCKSIZE, 0);
+                        bridges.push(geometry);
+
+                        const sideA = this.generateBlock();
+                        sideA.scale(1, 0.1, 0.4);
+                        sideA.translate(i * BLOCKSIZE, (j - 0.5) * BLOCKSIZE, BLOCKSIZE * 0.5);
+                        bridgeHandles.push(sideA);
+
+                        const sideB = this.generateBlock();
+                        sideB.scale(1, 0.1, 0.4);
+                        sideB.translate(i * BLOCKSIZE, (j + 0.5) * BLOCKSIZE, BLOCKSIZE * 0.5);
+                        bridgeHandles.push(sideB);
+                }
+            }
+        }
+    }
+
+    private generateBlock(height?: number) {
+        return new THREE.BoxGeometry(BLOCKSIZE, BLOCKSIZE, height ?? BLOCKSIZE, 1, 1, 1);
+    }
+
+    resize() {
+        const sizes = this.canvas.parentElement?.getBoundingClientRect();
+        const w = sizes?.width || window.innerWidth;
+        
+        if (this.canvasHeight === 0)
+        this.canvasHeight = sizes?.height || window.innerHeight;
+
+        this.camera.aspect = w / this.canvasHeight;
+        this.camera.updateProjectionMatrix();
+
+        this.renderer.setSize(w, this.canvasHeight);
+    }
+
+    dispose() {
+        for(let i = this.scene.children.length - 1; i >= 0; i--) {
+            const obj = this.scene.children[i];
+            this.scene.remove(obj);
+        }
+    }
+}
+
+
+
 
 
 
 
 
 window.onload = () => {
-    const grid = generateWithRiver(15, 15);
-    const canvas = document.getElementById('citycanvas') as HTMLCanvasElement;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(5, window.innerWidth / window.innerHeight, 10, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
-    renderer.setClearColor(0xffffff, 1);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    const light = new THREE.DirectionalLight(0xffffff, 0.5);
-    light.position.set(0, -100, 120);
-    scene.add(light);
-    const ambience = new THREE.AmbientLight(0xffffff, 0.7);
-    scene.add(ambience);
-
-    const roadMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
-    const bridgeMaterial = new THREE.MeshLambertMaterial({ color: 0xFFAA00 });
-    const bridgeMaterialHandles = new THREE.MeshLambertMaterial({ color: 0xCC8800 });
-    const buildingMaterial = new THREE.MeshLambertMaterial({ color: 0xdddddd });
-    const parkMaterial = new THREE.MeshLambertMaterial({ color: 0x55FF55 });
-    const waterMaterial = new THREE.MeshLambertMaterial({ color: 0x00FFFF });
-    
-    const BLOCKSIZE = 2;
-
-    const roads = [];
-    const bridges = [];
-    const buildings = [];
-    const bridgeHandles = [];
-    const parks = [];
-    const waters = [];
-
-    for (let i = 0; i < grid.length; i++) {
-        for (let j = 0; j < grid[i].length; j++) {
-            if (grid[i][j] === 'B') {
-                const height = (Math.random() * 0.5 + 2) * BLOCKSIZE;
-                const geometry = new THREE.BoxGeometry(BLOCKSIZE, BLOCKSIZE, height, 1, 1, 1);
-                geometry.translate(i * BLOCKSIZE, j * BLOCKSIZE, height * 0.5 - BLOCKSIZE * 0.5);
-                buildings.push(geometry);
-            } else if (grid[i][j] === 'R') {
-                const geometry = new THREE.BoxGeometry(BLOCKSIZE, BLOCKSIZE, BLOCKSIZE, 1, 1, 1);
-                geometry.translate(i * BLOCKSIZE, j * BLOCKSIZE, 0);
-                roads.push(geometry);
-            } else if (grid[i][j] === 'P') {
-                const geometry = new THREE.BoxGeometry(BLOCKSIZE, BLOCKSIZE, BLOCKSIZE, 1, 1, 1);
-                geometry.translate(i * BLOCKSIZE, j * BLOCKSIZE, 0);
-                parks.push(geometry);
-            } else if (grid[i][j] === 'W') {
-                const geometry = new THREE.BoxGeometry(BLOCKSIZE, BLOCKSIZE, BLOCKSIZE, 1, 1, 1);
-                geometry.translate(i * BLOCKSIZE, j * BLOCKSIZE, 0);
-                waters.push(geometry);
-            } else if (grid[i][j] === 'M') {
-                const geometry = new THREE.BoxGeometry(BLOCKSIZE, BLOCKSIZE, BLOCKSIZE, 1, 1, 1);
-                geometry.translate(i * BLOCKSIZE, j * BLOCKSIZE, 0);
-                bridges.push(geometry);
-
-                const sideA = new THREE.BoxGeometry(BLOCKSIZE, BLOCKSIZE, BLOCKSIZE, 1, 1, 1);
-                sideA.scale(1, 0.1, 0.4);
-                sideA.translate(i * BLOCKSIZE, (j - 0.5) * BLOCKSIZE, BLOCKSIZE * 0.5);
-                bridgeHandles.push(sideA);
-
-                const sideB  = new THREE.BoxGeometry(BLOCKSIZE, BLOCKSIZE, BLOCKSIZE, 1, 1, 1);
-                sideB.scale(1, 0.1, 0.4);
-                sideB.translate(i * BLOCKSIZE, (j + 0.5) * BLOCKSIZE, BLOCKSIZE * 0.5);
-                bridgeHandles.push(sideB);
-            }
-        }
-    }
-
-    const road = mergeBufferGeometries(roads);
-    const roadMesh = new THREE.Mesh(road, roadMaterial);
-    scene.add(roadMesh);
-
-    if (bridges.length > 0) {
-        const bridge = mergeBufferGeometries(bridges);
-        const bridgeMesh = new THREE.Mesh(bridge, bridgeMaterial);
-        scene.add(bridgeMesh);
-
-        const bridgeHandle = mergeBufferGeometries(bridgeHandles);
-        const bridgeHandlesMesh = new THREE.Mesh(bridgeHandle, bridgeMaterialHandles);
-        scene.add(bridgeHandlesMesh);
-    }
-
-    const building = mergeBufferGeometries(buildings);
-    const buildingMesh = new THREE.Mesh(building, buildingMaterial);
-    scene.add(buildingMesh);
-
-    const park = mergeBufferGeometries(parks);
-    const parkMesh = new THREE.Mesh(park, parkMaterial);
-    scene.add(parkMesh);
-
-    const water = mergeBufferGeometries(waters);
-    const waterMesh = new THREE.Mesh(water, waterMaterial);
-    scene.add(waterMesh);
-
-    const trees = genTrees(grid, BLOCKSIZE * 0.5, BLOCKSIZE);
-    scene.add(trees);
-
-    
-    const sceneCenter = new THREE.Vector3(30, 30, 0);
-    camera.position.x = -400;
-    camera.position.y = -400;
-    camera.position.z = 400;
-    camera.up = new THREE.Vector3(0, 0, 1);
-    camera.lookAt(sceneCenter);
-
-
-    const personMesh = new THREE.Mesh(new THREE.BoxGeometry(BLOCKSIZE * 0.3, BLOCKSIZE * 0.3, BLOCKSIZE * 0.3, 1, 1, 1), new THREE.MeshLambertMaterial({ color: 0xff0000 }));
-    
-    personMesh.position.z = BLOCKSIZE;
-    
-    const city = new City(grid);
-    const population = new Population(city);
-    population.generate(personMesh, 40);
-    for (let i = 0; i < population.people.length; i++) {
-        scene.add(population.people[i].mesh);
-    }
-
-    let time = 0;
-    const animate = () => {
-        requestAnimationFrame(animate);
-        population.tick(time, BLOCKSIZE);
-        renderer.render(scene, camera);
-        time++;
-    }
-    animate();
-
-    let initHeight = 0;
-    const resize = () => {
-        const sizes = canvas.parentElement?.getBoundingClientRect();
-        const w = sizes?.width || window.innerWidth;
-        if (initHeight === 0) {
-            initHeight = sizes?.height || window.innerHeight;
-        }
-
-        camera.aspect = w / initHeight;
-        camera.updateProjectionMatrix();
-
-        renderer.setSize(w, initHeight);
-        /*if (window.innerHeight < 0.58 * window.innerWidth) {
-            scene.position.x = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
-            scene.position.y = Math.max(Math.min(window.innerWidth - 1200, 0), -25);
-        } else {
-            scene.position.x = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
-            scene.position.y = -Math.max(Math.min(window.innerWidth - 1200, 0), -25);
-        }*/
-    }
-
-    window.onresize = resize;
-    resize();
-
-    
+    const animation = new CityAnimation();
+    animation.generate();
+    window.onresize = () => animation.resize();
+    animation.resize();
 }
