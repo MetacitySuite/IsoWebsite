@@ -345,6 +345,17 @@ img.icon {
     display: block;
 }
 
+#partnersList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#ocdLogo {
+    filter: brightness(0);
+}
+
 #copyright {
     margin: 1rem var(--content-margin) 3rem;
     font-size: 0.8em;
