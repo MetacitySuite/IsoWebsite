@@ -1,81 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title>Metacity</title>
-    <link rel="stylesheet" href="assets/style.css">
-
-</head>
-
-<body>
-    <div id="introContainer">
-        <div id="canvasContainer">
-            <canvas id="citycanvas"></canvas>
-            <div id="clickPrompt">&nwarr; click to generate new city</div>
-        </div>
-        <div id="introTexts">
-            <p><span class="name">Metacity</span> offers tools and services for urban data processing and visualization
-            </p>
-            <p><a href="mailto:hello@metacity.cc" class="linkEmph">Get in touch</a></p>
-        </div>
-    </div>
-    <div>
-        <a href="https://givemefeedback.metacity.cc">
-            <div>
-
-            </div>
-        </a>
-    </div>
-    <div class="contentContatiner">
-        <div id="contact">
-            <div class="col">
-                <p>Prague</p>
-                <p>hello@metacity.cc</p>
-                <p>Římská 12</p>
-                <p>120 00 Praha 2</p>
-                <p>Czech Republic</p>
-            </div>
-            <div class="col">
-                <p>Bor</p>
-                <p>Přimdská 362</p>
-                <p>348 02 Bor</p>
-                <p>Czech Republic</p>
-                <p>Reg. No.: 051 83 731</p>
-                <p>VAT: CZ05183731</p>
-            </div>
-        </div>
-    </div>
-    <div id="footerStrip">
-        <div class="contentContatiner">
-            <div id="partners">
-                <div class="itemType">Partners</div>
-                <div id="partnersList">
-                    <a href="https://www.cesnet.cz"><img src="assets/cesnet.svg" alt="cesnet"></a>
-                    <a href="http://oncue.design" id="ocdLogo"><img src="assets/ocdLogo.png" alt="oncue.design"></a>
-                </div>
-            </div>
-            <div id="copyright">
-                &copy; 2022 stdio s.r.o. All rights reserved, www.stdio.cz
-            </div>
-        </div>
-    </div>
-    <script src="bundle.js"></script>
-    <script>
-        const clients = ["Real&nbsp;Estate Developers", "Creative Studios", "Marketing&nbsp;Agencies", "Events and Expos", "Urban&nbsp;Planners"];
-        const setClient = () => {
-            const client = clients[Math.floor(Math.random() * clients.length)];
-            document.getElementById("client").innerHTML = client;
-        }
-
-        //setClient();
-        //setInterval(setClient, 1000);
-
-    </script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Metacity Tools</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
