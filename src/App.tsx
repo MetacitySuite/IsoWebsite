@@ -63,7 +63,7 @@ function App() {
                     </div>
                     <div className="leading-normal mt-8 md:mt-0">
                         <p>Prague</p>
-                        <p>hello@metacity.cc</p>
+                        <p>metacity@stdio.cz</p>
                         <p>Římská 12</p>
                         <p>120 00 Praha 2</p>
                         <p>Czech Republic</p>
