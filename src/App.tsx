@@ -96,8 +96,9 @@ function App() {
                                 </a>
                             </div>
                         </div>
-                        <div className="text-neutral-700 my-4">
-                            &copy; 2022 st.dio s.r.o. All rights reserved, www.stdio.cz
+                        <div className="text-neutral-700 my-4 flex flex-row justify-between">
+                            <div>&copy; 2023 st.dio s.r.o. All rights reserved, www.stdio.cz</div>
+                            <div className="text-neutral-400">Website version v{APP_VERSION}</div>
                         </div>
                     </div>
                 </div>

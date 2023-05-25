@@ -1,5 +1,3 @@
-
-
 function strReverse(str) {
     return str.split('').reverse().join('');
 }
@@ -48,7 +46,6 @@ class LayoutTile {
     }
 }
 
-
 const tiles = [
     new LayoutTile('BRRB', 'BR', 'RR', 'RB', 'BB'),
     new LayoutTile('BRRR', 'BR', 'RR', 'RR', 'RB'),
@@ -76,11 +73,10 @@ const tiles = [
 
 const colors = {
     //'P': [84, 186, 185],
-    'P': [158, 210, 198],
-    'R': [255, 255, 255],
-    'B': [233, 218, 193],
-}
-
+    P: [158, 210, 198],
+    R: [255, 255, 255],
+    B: [233, 218, 193],
+};
 
 class TileList {
     constructor(tiles) {
@@ -90,25 +86,33 @@ class TileList {
 
     evaluateTileBellow(otherTiles) {
         let len = this.tiles.length;
-        this.tiles = this.tiles.filter(option => otherTiles.some((tile => option.canHaveBellow(tile))));
+        this.tiles = this.tiles.filter((option) =>
+            otherTiles.some((tile) => option.canHaveBellow(tile))
+        );
         this.changed = this.tiles.length !== len;
     }
 
     evaluateTileAbove(otherTiles) {
         let len = this.tiles.length;
-        this.tiles = this.tiles.filter(option => otherTiles.some((tile => option.canHaveAbove(tile))));
+        this.tiles = this.tiles.filter((option) =>
+            otherTiles.some((tile) => option.canHaveAbove(tile))
+        );
         this.changed = this.tiles.length !== len;
     }
 
     evaluateTileLeft(otherTiles) {
         let len = this.tiles.length;
-        this.tiles = this.tiles.filter(option => otherTiles.some((tile => option.canHaveLeft(tile))));
+        this.tiles = this.tiles.filter((option) =>
+            otherTiles.some((tile) => option.canHaveLeft(tile))
+        );
         this.changed = this.tiles.length !== len;
     }
 
     evaluateTileRight(otherTiles) {
         let len = this.tiles.length;
-        this.tiles = this.tiles.filter(option => otherTiles.some((tile => option.canHaveRight(tile))));
+        this.tiles = this.tiles.filter((option) =>
+            otherTiles.some((tile) => option.canHaveRight(tile))
+        );
         this.changed = this.tiles.length !== len;
     }
 
@@ -127,8 +131,7 @@ class TileList {
     draw(x, y) {
         //stroke(0);
         //rect(x * 20, y * 20, 20, 20);
-        if (!this.converged)
-            return;
+        if (!this.converged) return;
 
         const tile = this.tile;
         noStroke();
@@ -151,7 +154,7 @@ class TileList {
     }
 
     clone() {
-        return new TileList(this.tiles.map(tile => tile.clone()));
+        return new TileList(this.tiles.map((tile) => tile.clone()));
     }
 }
 
@@ -163,8 +166,7 @@ export class Layout {
     constructor(dimX, dimY) {
         this.options = [];
         for (let i = 0; i < tiles.length; i++) {
-            for (let r = 0; r < 4; r++)
-                this.options.push(tiles[i].rotate().clone());
+            for (let r = 0; r < 4; r++) this.options.push(tiles[i].rotate().clone());
         }
 
         this.init(dimX, dimY);
@@ -182,7 +184,7 @@ export class Layout {
     reinit() {
         for (let i = 0; i < this.arr.length; i++) {
             for (let j = 0; j < this.arr[i].length; j++) {
-                this.arr[i][j] = new TileList(this.options.map(option => option));
+                this.arr[i][j] = new TileList(this.options.map((option) => option));
             }
         }
 
@@ -192,9 +194,8 @@ export class Layout {
         //this.propagate(coords);
     }
 
-
     generateStep() {
-        if(this.status === FAILED) {
+        if (this.status === FAILED) {
             this.reinit();
         }
 
@@ -208,7 +209,6 @@ export class Layout {
     get converged() {
         return this.status === CONVERGED;
     }
-
 
     generate() {
         while (!this.converged) {
@@ -233,10 +233,10 @@ export class Layout {
 
     printArrState() {
         const state = [];
-        for(let i = 0; i < this.arr.length; i++) {
+        for (let i = 0; i < this.arr.length; i++) {
             const row = [];
-            for(let j = 0; j < this.arr[i].length; j++) {
-                row.push(this.arr[i][j].tiles.map(tile => tile.code));
+            for (let j = 0; j < this.arr[i].length; j++) {
+                row.push(this.arr[i][j].tiles.map((tile) => tile.code));
             }
             state.push(row);
         }
@@ -254,8 +254,7 @@ export class Layout {
             if (coords.y > 0) {
                 const above = this.arr[coords.x][coords.y - 1];
                 above.evaluateTileBellow(tilesList.tiles);
-                if (above.failed)
-                    return;
+                if (above.failed) return;
                 if (above.changed && !inQueue.has(above)) {
                     queue.push({ x: coords.x, y: coords.y - 1 });
                     inQueue.add(above);
@@ -265,9 +264,8 @@ export class Layout {
             if (coords.y < this.arr[coords.x].length - 1) {
                 const below = this.arr[coords.x][coords.y + 1];
                 below.evaluateTileAbove(tilesList.tiles);
-                if (below.failed)
-                    return;
-                
+                if (below.failed) return;
+
                 if (below.changed && !inQueue.has(below)) {
                     queue.push({ x: coords.x, y: coords.y + 1 });
                     inQueue.add(below);
@@ -277,8 +275,7 @@ export class Layout {
             if (coords.x > 0) {
                 const left = this.arr[coords.x - 1][coords.y];
                 left.evaluateTileRight(tilesList.tiles);
-                if (left.failed)
-                    return;
+                if (left.failed) return;
 
                 if (left.changed && !inQueue.has(left)) {
                     queue.push({ x: coords.x - 1, y: coords.y });
@@ -289,13 +286,12 @@ export class Layout {
             if (coords.x < this.arr.length - 1) {
                 const right = this.arr[coords.x + 1][coords.y];
                 right.evaluateTileLeft(tilesList.tiles);
-                if (right.failed)
-                    return;
+                if (right.failed) return;
 
                 if (right.changed && !inQueue.has(right)) {
                     queue.push({ x: coords.x + 1, y: coords.y });
                     inQueue.add(right);
-                };
+                }
             }
         }
     }
@@ -307,8 +303,7 @@ export class Layout {
                     return FAILED;
                 }
 
-                if (!this.arr[i][j].converged)
-                    return NOTCOVERGED;
+                if (!this.arr[i][j].converged) return NOTCOVERGED;
             }
         }
         return CONVERGED;
@@ -340,7 +335,6 @@ export class Layout {
     }
 }
 
-
 function validSize(index, size) {
     return index >= 0 && index < size;
 }
@@ -363,30 +357,29 @@ function addRiver(grid) {
         grid[pos[0] + 3][pos[1]] = 'W';
         //TODO check boundries
 
-
         next = [pos[0], pos[1] + 1];
-        
+
         if (stp % 8 === 0) {
             do {
                 const moveDir = Math.round(Math.random()) * 2 - 1;
                 next = [pos[0], pos[1]];
                 next[0] += moveDir;
-            } while(!validSize(next[0], sizeX) || !validSize(next[1], sizeY));
+            } while (!validSize(next[0], sizeX) || !validSize(next[1], sizeY));
         }
 
         pos = next;
         stp++;
-    } while(!reachedBorder(pos[0], sizeX) && !reachedBorder(pos[1], sizeY));
+    } while (!reachedBorder(pos[0], sizeX) && !reachedBorder(pos[1], sizeY));
 }
 
 function addBridgeAlongYAxis(grid) {
     let lastBefore, firstAfter, waterEncoutered;
-    for(let i = Math.min(5, grid[0].length - 1); i < grid[0].length; i++) {
+    for (let i = Math.min(5, grid[0].length - 1); i < grid[0].length; i++) {
         lastBefore = grid[0][i];
         waterEncoutered = false;
         firstAfter = null;
-        
-        for(let j = 0; j < grid.length; j++) {
+
+        for (let j = 0; j < grid.length; j++) {
             if (grid[j][i] == 'W') {
                 waterEncoutered = true;
             } else if (!waterEncoutered) {
@@ -397,17 +390,16 @@ function addBridgeAlongYAxis(grid) {
             }
         }
 
-        if (waterEncoutered && (lastBefore == 'R' && firstAfter == 'R')) {
-            for(let j = 0; j < grid.length; j++) {
+        if (waterEncoutered && lastBefore == 'R' && firstAfter == 'R') {
+            for (let j = 0; j < grid.length; j++) {
                 if (grid[j][i] == 'W') {
                     grid[j][i] = 'M';
-                } 
+                }
             }
             return;
         }
     }
 }
-
 
 export function generateWithRiver(x, y) {
     const layout = new Layout(x, y);

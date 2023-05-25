@@ -6,6 +6,7 @@ import { City } from './city';
 import { genTrees } from './tree.js';
 
 const BLOCKSIZE = 2;
+const CITYSIZE = 15;
 
 export class CityAnimation {
     roadMaterial: THREE.MeshLambertMaterial;
@@ -36,7 +37,7 @@ export class CityAnimation {
         this.camera.position.y = -400;
         this.camera.position.z = 400;
         this.camera.up = new THREE.Vector3(0, 0, 1);
-        this.camera.lookAt(new THREE.Vector3(30, 30, 0));
+        this.camera.lookAt(new THREE.Vector3(CITYSIZE * BLOCKSIZE, CITYSIZE * BLOCKSIZE, 0));
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
             antialias: true,
@@ -76,7 +77,7 @@ export class CityAnimation {
     }
 
     generate() {
-        const grid = generateWithRiver(15, 15);
+        const grid = generateWithRiver(CITYSIZE, CITYSIZE);
         const roads: THREE.BoxGeometry[] = [];
         const bridges: THREE.BoxGeometry[] = [];
         const buildings: THREE.BoxGeometry[] = [];
