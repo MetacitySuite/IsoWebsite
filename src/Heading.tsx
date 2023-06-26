@@ -29,7 +29,7 @@ export function Heading() {
             <div className="bg-white text-3xl md:text-4xl lg:text-5xl mx-4 z-100 relative">
                 <p className="leading-normal">
                     <span className="font-black">Metacity</span> offers tools and services for urban
-                    data processing and visualization
+                    data processing and visualization.
                 </p>
                 <p className="mt-8">
                     <a href="mailto:metacity@stdio.cz" className="font-black border-b-2">

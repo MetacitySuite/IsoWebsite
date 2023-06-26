@@ -10,6 +10,49 @@ function App() {
             <Heading />
 
             <div className="max-w-[1200px] mx-auto">
+                <a href="https://studio.metacity.cc">
+                    <div className="flex flex-row flex-wrap mx-4 rounded-3xl shadow-lg">
+                        <img
+                            src="studio3.png"
+                            className="block w-[100%] md:w-[50%]  object-cover md:rounded-l-3xl md:rounded-tr-none rounded-t-3xl"
+                        />
+                        <img
+                            src="studio.png"
+                            className="block w-[100%] md:w-[50%]  object-cover md:rounded-r-3xl md:rounded-bl-none rounded-b-3xl"
+                        />
+                    </div>
+                </a>
+            </div>
+            <div className="max-w-[1000px] mx-auto mt-10 md:mt-20 text-2xl md:text-3xl">
+                <p className="mx-4 leading-normal text-neutral-400">
+                    We are a Prague-based division of{' '}
+                    <a href="https://stdio.cz" className="border-b">
+                        st.dio
+                    </a>{' '}
+                    programmers focused on{' '}
+                    <span className="text-neutral-700">spatial data visualization</span> and{' '}
+                    <span className="text-neutral-700">interactive simulation</span> on the web.
+                </p>
+                <div className="mx-4 mt-8 leading-normal text-neutral-400 flex flex-row flex-wrap items-center border-t pt-8">
+                    <div className="text-neutral-400 mr-4">Partners:</div>
+                    <a href="https://www.cesnet.cz">
+                        <img
+                            src="cesnet.svg"
+                            alt="cesnet"
+                            className="max-w-[100px] brightness-0 opacity-50"
+                        />
+                    </a>
+                    <a href="http://oncue.design">
+                        <img
+                            src="ocdLogo.png"
+                            alt="oncue.design"
+                            className="max-w-[100px] brightness-0 opacity-50"
+                        />
+                    </a>
+                </div>
+            </div>
+
+            <div className="max-w-[1200px] mx-auto mt-8 md:mt-16">
                 <a href="https://demo.metacity.cc">
                     <div className="flex flex-row flex-wrap mx-4 rounded-3xl shadow-lg">
                         <img
@@ -30,26 +73,6 @@ function App() {
                         />
                     </div>
                 </a>
-                <div className="max-w-[1000px] mx-auto mt-10 md:mt-20 text-2xl md:text-3xl">
-                    <p className="mx-4 leading-normal text-neutral-400">
-                        We are a Prague-based division of{' '}
-                        <a href="https://stdio.cz" className="border-b">
-                            st.dio
-                        </a>{' '}
-                        programmers focused on{' '}
-                        <span className="text-neutral-700">spatial data visualization</span> and{' '}
-                        <span className="text-neutral-700">interactive simulation</span> on the web.
-                        Check out our{' '}
-                        <a href="https://demo.metacity.cc" className="border-b">
-                            demo visualization projects
-                        </a>{' '}
-                        or our open code at{' '}
-                        <a href="https://github.com/metacitytools" className="border-b">
-                            GitHub
-                        </a>
-                        .
-                    </p>
-                </div>
             </div>
 
             <div className="max-w-[1000px] mx-auto mt-10 md:mt-20">
@@ -78,24 +101,9 @@ function App() {
                 </div>
             </div>
 
-            <div className="border-t py-8 mt-20 bg-neutral-100">
+            <div className="border-t py-8 mt-20 bg-white">
                 <div className="max-w-[1000px] m-auto">
                     <div className="mx-4 text-sm">
-                        <div className="">
-                            <div className="text-neutral-400 pb-4">Partners</div>
-                            <div className="flex flex-row brightness-0 opacity-50">
-                                <a href="https://www.cesnet.cz">
-                                    <img src="cesnet.svg" alt="cesnet" className="max-w-[100px]" />
-                                </a>
-                                <a href="http://oncue.design">
-                                    <img
-                                        src="ocdLogo.png"
-                                        alt="oncue.design"
-                                        className="max-w-[100px]"
-                                    />
-                                </a>
-                            </div>
-                        </div>
                         <div className="text-neutral-700 my-4 flex flex-row justify-between">
                             <div>&copy; 2023 st.dio s.r.o. All rights reserved, www.stdio.cz</div>
                             <div className="text-neutral-400">Website version v{APP_VERSION}</div>
