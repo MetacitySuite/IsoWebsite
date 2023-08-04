@@ -1,10 +1,8 @@
-import React from 'react';
 import { Heading } from './Heading';
-import clsx from 'clsx';
 
 const classImg = 'w-[40%] object-cover rounded-lg drop-shadow-lg absolute';
 
-function App() {
+export function HomeScreen() {
     return (
         <>
             <Heading />
@@ -114,5 +112,3 @@ function App() {
         </>
     );
 }
-
-export default App;
