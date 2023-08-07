@@ -22,11 +22,15 @@ export function ColumnContainer(props: { children: React.ReactNode; className?: 
     return <div className={clsx(props.className, 'flex flex-col')}>{props.children}</div>;
 }
 
-export function Section(props: { children: React.ReactNode; className?: string }) {
+export function Section(props: {
+    children: React.ReactNode;
+    className?: string;
+    innerClassName?: string;
+}) {
     return (
         <div className={clsx(props.className)}>
-            <div className="max-w-[1000px] mx-auto">
-                <div className="mx-4">{props.children}</div>
+            <div className={clsx('max-w-[1000px] mx-auto', props.innerClassName)}>
+                <div className="mx-4 md:mx-16 lg:mx-4">{props.children}</div>
             </div>
         </div>
     );

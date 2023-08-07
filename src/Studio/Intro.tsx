@@ -28,7 +28,7 @@ export function IntroWelcome() {
 export function IntroUses() {
     return (
         <RowContainer className="pb-16 flex-col-reverse">
-            <ColumnContainer className="lg:max-w-[50%] items-center lg:mr-8">
+            <ColumnContainer className="lg:max-w-[40%] items-center lg:mr-8">
                 <Usage>
                     <UsageTitle>Create or link tabular data for your 3D objects.</UsageTitle>
                     <UsageDescription>
@@ -55,7 +55,7 @@ export function IntroUses() {
                     </UsageDescription>
                 </Usage>
             </ColumnContainer>
-            <ColumnContainer className="lg:max-w-[50%] justify-center">
+            <ColumnContainer className="lg:w-[60%] max-w-[850px] justify-center m-auto">
                 <div className="mb-16">
                     <div className="lg:mt-0 bg-black px-3 py-2.5 rounded-t-xl ">
                         <div className="flex flex-wrap items-center -m-2">

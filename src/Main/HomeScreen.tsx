@@ -8,7 +8,7 @@ export function HomeScreen() {
             <Heading />
 
             <div className="max-w-[1200px] mx-auto">
-                <a href="https://metacity.cc/studio">
+                <a href="/studio">
                     <div className="flex flex-row flex-wrap mx-4 rounded-3xl shadow-lg">
                         <img
                             src="studio3.png"

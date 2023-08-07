@@ -13,6 +13,8 @@ export function Studio() {
             <Section>
                 <Header />
                 <IntroWelcome />
+            </Section>
+            <Section innerClassName="xl:max-w-[1200px]">
                 <IntroUses />
             </Section>
             <Section className="bg-white text-black rounded-t-3xl">
