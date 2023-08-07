@@ -5,8 +5,8 @@ import construciton from './assets/construction.jpg';
 
 export function UseCases() {
     return (
-        <ColumnContainer className="my-32">
-            <div className="text-4xl text-center">Use Cases</div>
+        <ColumnContainer className="py-32">
+            <div className="text-4xl text-center title-font">Use Cases</div>
             <RowContainer className="mt-8 lg:space-x-8">
                 <UseCase>
                     <UseCaseImage src={construciton} />

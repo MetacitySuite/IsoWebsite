@@ -5,21 +5,23 @@ import { HowItWorksTitle, Step1Panel, Step2Panel } from './HowItWorks';
 import { IntroUses, IntroWelcome } from './Intro';
 import { UseCases } from './UseCases';
 
+import './sentient.css';
+
 export function Studio() {
     return (
         <>
-            <Section className="bg-neutral-900 text-white">
+            <Section>
                 <Header />
                 <IntroWelcome />
                 <IntroUses />
             </Section>
-            <Section>
+            <Section className="bg-white text-black rounded-t-3xl">
                 <HowItWorksTitle />
                 <Step1Panel />
                 <Step2Panel />
                 <UseCases />
             </Section>
-            <Section className="bg-neutral-900 text-white">
+            <Section>
                 <TryNow />
                 <Footer />
             </Section>

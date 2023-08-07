@@ -4,14 +4,15 @@ import step1img from './assets/step_1.jpg';
 import step2img from './assets/step_2.jpg';
 
 export function HowItWorksTitle() {
-    return <div className="text-3xl text-center my-16">Let's see how it works.</div>;
+    return <div className="text-4xl text-center py-16 title-font">Let's see how it works.</div>;
 }
 
 export function Step1Panel() {
     return (
         <RowContainer>
             <ColumnContainer className="lg:max-w-[50%] mb-4 lg:mb-0 lg:mr-8">
-                <StepTitle>Step 1: Prepare Your Data</StepTitle>
+                <div className="text-neutral-500">Step 1</div>
+                <StepTitle>Prepare Your Data</StepTitle>
                 <StepDescription>
                     Metacity Studio, with its Metacity format, simplifies the process of creating
                     and linking all your required data within a 3D viewport to any 3D models. Open
@@ -47,7 +48,8 @@ export function Step2Panel() {
                 <img src={step2img} alt="Step 2" className="rounded-xl" />
             </ColumnContainer>
             <ColumnContainer className="lg:max-w-[50%] mb-4 lg:mb-0 lg:ml-8">
-                <StepTitle>Step 2: View and Present Your Data</StepTitle>
+                <div className="text-neutral-500">Step 2</div>
+                <StepTitle>View &amp; Present Your Data</StepTitle>
                 <StepDescription>
                     With Metacity Viewer, seamlessly view, present, and interact with your data.
                 </StepDescription>
@@ -71,7 +73,7 @@ export function Step2Panel() {
 }
 
 function StepTitle(props: { children: React.ReactNode }) {
-    return <div className="text-4xl">{props.children}</div>;
+    return <div className="text-3xl">{props.children}</div>;
 }
 
 function StepDescription(props: { children: React.ReactNode }) {

@@ -5,8 +5,8 @@ import logo from './assets/logo-v2-tiny-funky.png';
 export function TryNow() {
     return (
         <ColumnContainer className="py-16">
-            <div className="text-4xl text-center">Try it out now!</div>
-            <div className="my-4 text-xl text-center">
+            <div className="text-4xl text-center title-font">Try it out now!</div>
+            <div className="mt-4 mb-8 text-xl text-center">
                 Select one of the examples to play around. Only large screens are currently
                 supported.
             </div>
