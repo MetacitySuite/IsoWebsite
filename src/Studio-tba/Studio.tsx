@@ -19,7 +19,7 @@ export function Studio() {
                 <Step2Panel />
                 <UseCases />
             </Section>
-            <Section>
+            <Section className="bg-neutral-900 text-white">
                 <TryNow />
                 <Footer />
             </Section>

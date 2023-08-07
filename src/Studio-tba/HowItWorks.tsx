@@ -1,15 +1,16 @@
 import { ColumnContainer, RowContainer } from './Containers';
 
 import step1img from './assets/step_1.jpg';
+import step2img from './assets/step_2.jpg';
 
 export function HowItWorksTitle() {
-    return <div>Let's see how it works.</div>;
+    return <div className="text-3xl text-center my-16">Let's see how it works.</div>;
 }
 
 export function Step1Panel() {
     return (
         <RowContainer>
-            <ColumnContainer>
+            <ColumnContainer className="lg:max-w-[50%] mb-4 lg:mb-0 lg:mr-8">
                 <StepTitle>Step 1: Prepare Your Data</StepTitle>
                 <StepDescription>
                     Metacity Studio, with its Metacity format, simplifies the process of creating
@@ -32,8 +33,8 @@ export function Step1Panel() {
                     <StepNotesListItem>Save everything into a unified format.</StepNotesListItem>
                 </StepNotesList>
             </ColumnContainer>
-            <ColumnContainer>
-                <img src={step1img} alt="Step 1" />
+            <ColumnContainer className="lg:max-w-[50%] justify-center">
+                <img src={step1img} alt="Step 1" className="rounded-xl" />
             </ColumnContainer>
         </RowContainer>
     );
@@ -41,8 +42,11 @@ export function Step1Panel() {
 
 export function Step2Panel() {
     return (
-        <RowContainer>
-            <ColumnContainer>
+        <RowContainer className="flex-col-reverse mt-16">
+            <ColumnContainer className="lg:max-w-[50%] justify-center">
+                <img src={step2img} alt="Step 2" className="rounded-xl" />
+            </ColumnContainer>
+            <ColumnContainer className="lg:max-w-[50%] mb-4 lg:mb-0 lg:ml-8">
                 <StepTitle>Step 2: View and Present Your Data</StepTitle>
                 <StepDescription>
                     With Metacity Viewer, seamlessly view, present, and interact with your data.
@@ -67,17 +71,17 @@ export function Step2Panel() {
 }
 
 function StepTitle(props: { children: React.ReactNode }) {
-    return <div>{props.children}</div>;
+    return <div className="text-4xl">{props.children}</div>;
 }
 
 function StepDescription(props: { children: React.ReactNode }) {
-    return <div>{props.children}</div>;
+    return <div className="text-xl my-8">{props.children}</div>;
 }
 
 function StepNotesList(props: { children: React.ReactNode }) {
-    return <ul>{props.children}</ul>;
+    return <ul className="pl-4">{props.children}</ul>;
 }
 
 function StepNotesListItem(props: { children: React.ReactNode }) {
-    return <li>{props.children}</li>;
+    return <li className="list-disc my-2">{props.children}</li>;
 }

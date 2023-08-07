@@ -5,25 +5,26 @@ import videoWEBM from './assets/ikea_v1.webm';
 
 export function IntroWelcome() {
     return (
-        <RowContainer className="py-20 justify-between items-center">
-            <div className="text-5xl max-w-[11em]">
-                <div># Welcome to Metacity:</div>
-                <div>Unlock the Power of</div>
-                <div>Tabular Data in 3D Space</div>
+        <ColumnContainer className="py-20 justify-between items-center">
+            <div className="text-5xl">
+                <div>
+                    <span className="text-neutral-500">#</span> Welcome to Metacity: Unlock the
+                    Power of Tabular Data in 3D Space
+                </div>
             </div>
-            <div className="max-w-[25em] text-center text-lg">
+            <div className="text-xl py-8">
                 The Metacity web app, together with its .MCSV format, offers a user-friendly
                 experience for organizing, presenting, editing, and creating tabular data in 3D
                 space.
             </div>
-        </RowContainer>
+        </ColumnContainer>
     );
 }
 
 export function IntroUses() {
     return (
-        <RowContainer>
-            <ColumnContainer>
+        <RowContainer className="pb-8">
+            <ColumnContainer className="lg:max-w-[50%] items-center lg:mr-8">
                 <Usage>
                     <UsageTitle>Create or link tabular data for your 3D objects.</UsageTitle>
                     <UsageDescription>
@@ -50,8 +51,30 @@ export function IntroUses() {
                     </UsageDescription>
                 </Usage>
             </ColumnContainer>
-            <ColumnContainer>
-                <video className="" autoPlay>
+            <ColumnContainer className="lg:max-w-[50%]">
+                <div className="mt-16 lg:mt-0 bg-black px-3 py-2.5 rounded-t-xl">
+                    <div className="flex flex-wrap items-center -m-2">
+                        <div className="w-auto p-2">
+                            <div className="flex flex-row">
+                                <div className="w-auto p-1">
+                                    <div className="w-2 h-2 bg-red-400 border border-red-500 rounded-full"></div>
+                                </div>
+                                <div className="w-auto p-1">
+                                    <div className="w-2 h-2 bg-yellow-400 border border-yellow-500 rounded-full"></div>
+                                </div>
+                                <div className="w-auto p-1">
+                                    <div className="w-2 h-2 bg-green-400 border border-green-500 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex-1 p-2">
+                            <div className="max-w-xs mx-auto py-0.5 px-4 text-sm text-white text-opacity-50 text-center bg-white bg-opacity-10 tracking-tight rounded">
+                                <span>studio.metacity.cc</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <video autoPlay className="rounded-b-xl">
                     <source src={videoWEBM} type="video/webm" />
                     <source src={videoMP4} type="video/mp4" />
                 </video>
@@ -65,9 +88,9 @@ function Usage(props: { children: React.ReactNode }) {
 }
 
 function UsageTitle(props: { children: React.ReactNode }) {
-    return <div>{props.children}</div>;
+    return <div className="pb-4 text-xl font-bold">{props.children}</div>;
 }
 
 function UsageDescription(props: { children: React.ReactNode }) {
-    return <div>{props.children}</div>;
+    return <div className="text-neutral-500">{props.children}</div>;
 }

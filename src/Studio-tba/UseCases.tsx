@@ -2,13 +2,12 @@ import { ColumnContainer, RowContainer } from './Containers';
 
 import planning from './assets/city_planning.jpg';
 import construciton from './assets/construction.jpg';
-import engineering from './assets/engineering.jpg';
 
 export function UseCases() {
     return (
-        <ColumnContainer>
-            <div>UseCases</div>
-            <RowContainer>
+        <ColumnContainer className="my-32">
+            <div className="text-4xl text-center">Use Cases</div>
+            <RowContainer className="mt-8 lg:space-x-8">
                 <UseCase>
                     <UseCaseImage src={construciton} />
                     <UseCaseTitle>Construction</UseCaseTitle>
@@ -29,28 +28,21 @@ export function UseCases() {
                         Metacity Viewer.
                     </UseCaseDescription>
                 </UseCase>
-                <UseCase>
-                    <UseCaseImage src={engineering} />
-                    <UseCaseTitle>Engineering</UseCaseTitle>
-                    <UseCaseDescription>
-                        Engineers can view all the parts necessary for a project.
-                    </UseCaseDescription>
-                </UseCase>
             </RowContainer>
         </ColumnContainer>
     );
 }
 
 function UseCase(props: { children: React.ReactNode }) {
-    return <div>{props.children}</div>;
+    return <div className="last:mt-16 lg:last:mt-0">{props.children}</div>;
 }
 
 function UseCaseImage(props: { src: string }) {
-    return <img src={props.src} alt="Use Case" />;
+    return <img src={props.src} alt="Use Case" className="rounded-xl" />;
 }
 
 function UseCaseTitle(props: { children: React.ReactNode }) {
-    return <div>{props.children}</div>;
+    return <div className="text-2xl my-4">{props.children}</div>;
 }
 
 function UseCaseDescription(props: { children: React.ReactNode }) {

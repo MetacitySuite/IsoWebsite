@@ -4,7 +4,7 @@ import { RowContainer } from './Containers';
 
 export function Header() {
     return (
-        <RowContainer className="py-10 justify-between items-center">
+        <RowContainer className="py-5 justify-between items-center" noResponsive>
             <div className="h-full">
                 <img src={logo} alt="logo" className="block" />
             </div>
