@@ -4,7 +4,6 @@ import { HomeScreen } from './Main/HomeScreen';
 import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Studio } from './Studio/Studio';
-import { Studio as Studio2 } from './Studio-tba/Studio';
 
 const router = createBrowserRouter([
     {
@@ -14,10 +13,6 @@ const router = createBrowserRouter([
     {
         path: '/studio',
         element: <Studio />,
-    },
-    {
-        path: '/studiotsx',
-        element: <Studio2 />,
     },
 ]);
 

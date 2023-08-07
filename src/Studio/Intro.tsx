@@ -17,7 +17,7 @@ export function IntroWelcome() {
                 </div>
             </div>
             <div className="text-xl py-8">
-                The Metacity web app, together with its .MCSV format, offers a user-friendly
+                The Metacity Studio web app, together with its .MCSV format, offers a user-friendly
                 experience for organizing, presenting, editing, and creating tabular data in 3D
                 space.
             </div>

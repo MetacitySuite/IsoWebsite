@@ -23,11 +23,11 @@ export function DemoButton() {
                 <Menu.Items className="dropdown-content absolute bg-white shadow-md w-full rounded-md z-50 left-0 mt-3">
                     <DemoItem
                         title="Ikea Room"
-                        link="https://dev.metacity.cc/editor/?model=raw.githubusercontent.com/MetacityTools/Studio-Examples/main/IKEA-Room/room_ikea.mcmodel&style=raw.githubusercontent.com/MetacityTools/Studio-Examples/main/IKEA-Room/room_ikea.mcstyle"
+                        link="https://studio.metacity.cc/editor/?model=raw.githubusercontent.com/MetacityTools/Studio-Examples/main/IKEA-Room/room_ikea.mcmodel&style=raw.githubusercontent.com/MetacityTools/Studio-Examples/main/IKEA-Room/room_ikea.mcstyle"
                     />
                     <DemoItem
                         title="Warehouse"
-                        link="https://dev.metacity.cc/editor/?model=raw.githubusercontent.com/MetacityTools/Studio-Examples/main/Warehouse-Materials/warehouse.mcmodel&style=raw.githubusercontent.com/MetacityTools/Studio-Examples/main/Warehouse-Materials/warehouse.mcstyle"
+                        link="https://studio.metacity.cc/editor/?model=raw.githubusercontent.com/MetacityTools/Studio-Examples/main/Warehouse-Materials/warehouse.mcmodel&style=raw.githubusercontent.com/MetacityTools/Studio-Examples/main/Warehouse-Materials/warehouse.mcstyle"
                     />
                 </Menu.Items>
             </Menu>
